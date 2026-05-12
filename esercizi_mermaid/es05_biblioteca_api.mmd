@@ -1,0 +1,37 @@
+%% ============================================================
+%% ESERCIZIO 05 — Biblioteca per API (python-api-exercises/es12)
+%% ============================================================
+%% TESTO:
+%% Database biblioteca usato dal server REST locale (porta 3001).
+%% - authors: id, name, country
+%% - genres: id, name
+%% - books: id, author_id (FK), genre_id (FK), title, pages,
+%%   available (boolean: disponibile/non disponibile)
+%%
+%% Relazioni:
+%%   - Un autore ha scritto molti libri
+%%   - Un genere classifica molti libri
+%% Fonte: python-api-exercises/es12_er.mmd
+%% ============================================================
+
+erDiagram
+    authors ||--o{ books : "ha_scritto"
+    genres  ||--o{ books : "classifica"
+
+    authors {
+        INTEGER id       PK
+        TEXT    name
+        TEXT    country
+    }
+    genres {
+        INTEGER id    PK
+        TEXT    name
+    }
+    books {
+        INTEGER id         PK
+        INTEGER author_id  FK
+        INTEGER genre_id   FK
+        TEXT    title
+        INTEGER pages
+        BOOLEAN available
+    }

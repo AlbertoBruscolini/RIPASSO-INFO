@@ -1,0 +1,49 @@
+%% ============================================================
+%% ESERCIZIO 10 — Universita' Completa (AVANZATO)
+%% ============================================================
+%% TESTO:
+%% Sistema universitario completo.
+%% - Dipartimento: id, nome
+%% - Professore: id, nome, cognome, dipartimento_id (FK)
+%% - Corso: id, nome, crediti, professore_id (FK)
+%% - Studente: matricola, nome, cognome, data_nascita
+%% - Iscrizione (raccordo N:N Studente-Corso):
+%%   studente_id, corso_id, data_esame, voto
+%%
+%% Mostra relazione N:N tramite tabella di raccordo.
+%% ============================================================
+
+erDiagram
+    Dipartimento ||--|{ Professore : "ha"
+    Professore   ||--o{ Corso      : "insegna"
+    Studente     ||--o{ Iscrizione : "ha_sostenuto"
+    Corso        ||--o{ Iscrizione : "iscrive"
+
+    Dipartimento {
+        INTEGER id   PK
+        TEXT    nome
+    }
+    Professore {
+        INTEGER id               PK
+        TEXT    nome
+        TEXT    cognome
+        INTEGER dipartimento_id  FK
+    }
+    Corso {
+        INTEGER id             PK
+        TEXT    nome
+        INTEGER crediti
+        INTEGER professore_id  FK
+    }
+    Studente {
+        INTEGER matricola    PK
+        TEXT    nome
+        TEXT    cognome
+        TEXT    data_nascita
+    }
+    Iscrizione {
+        INTEGER studente_id PK,FK
+        INTEGER corso_id    PK,FK
+        TEXT    data_esame
+        INTEGER voto
+    }

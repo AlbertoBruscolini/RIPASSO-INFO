@@ -1,0 +1,56 @@
+%% ============================================================
+%% ESERCIZIO 03 — Apicoltura Italiana (sql-exercises/es02)
+%% ============================================================
+%% TESTO:
+%% Database per la produzione italiana di miele.
+%% - BEEKEEPER (Apicoltore): id, nome
+%% - APIARY (Apiario): codice, num_arnie, localita, comune,
+%%   provincia, regione, FK al beekeeper
+%% - TYPOLOGY (Tipologia miele): id, nome, descrizione
+%%   (categorie: Nazionale, Regionale, Territoriale, DOP)
+%% - HONEY (Miele): id, denominazione, typology_id (FK)
+%% - PRODUCTION (Produzione): id, anno, quantita,
+%%   apiary_code (FK), honey_id (FK)
+%%
+%% Un apicoltore possiede più apiari.
+%% Un apiario produce più registri di produzione annuali.
+%% Una tipologia classifica più mieli.
+%% Fonte: database-design-exercises/es01_sol.mmd
+%% ============================================================
+
+erDiagram
+    BEEKEEPER  ||--o{ APIARY     : "possiede"
+    TYPOLOGY   ||--o{ HONEY      : "classifica"
+    HONEY      ||--o{ PRODUCTION : "e_prodotto_in"
+    APIARY     ||--o{ PRODUCTION : "registra"
+
+    BEEKEEPER {
+        INTEGER id   PK
+        TEXT    nome
+    }
+    TYPOLOGY {
+        INTEGER id          PK
+        TEXT    nome
+        TEXT    descrizione
+    }
+    HONEY {
+        INTEGER id            PK
+        TEXT    denominazione
+        INTEGER typology_id   FK
+    }
+    APIARY {
+        TEXT    codice         PK
+        INTEGER num_arnie
+        TEXT    localita
+        TEXT    comune
+        TEXT    provincia
+        TEXT    regione
+        INTEGER beekeeper_id   FK
+    }
+    PRODUCTION {
+        INTEGER id            PK
+        INTEGER anno
+        REAL    quantita
+        TEXT    apiary_code   FK
+        INTEGER honey_id      FK
+    }

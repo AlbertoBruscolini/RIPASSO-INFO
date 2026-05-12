@@ -1,0 +1,50 @@
+%% ============================================================
+%% ESERCIZIO 15 — Gestione Progetti (AVANZATO)
+%% ============================================================
+%% TESTO:
+%% Modella la gestione di progetti aziendali con assegnazioni.
+%% - Dipendente: id, nome, cognome, ruolo, stipendio
+%% - Progetto: id, nome, data_inizio, data_fine_prevista,
+%%   budget
+%% - Assegnazione (N:N): dipendente_id (FK), progetto_id (FK),
+%%   ore_settimanali, ruolo_nel_progetto
+%%   chiave primaria composta (dipendente_id, progetto_id)
+%% - Task: id, progetto_id (FK), titolo, stato
+%%   (Aperto/InCorso/Chiuso), priorita
+%%   responsabile_id (FK Dipendente)
+%% ============================================================
+
+erDiagram
+    Dipendente ||--o{ Assegnazione : "lavora_su"
+    Progetto   ||--o{ Assegnazione : "ha_team"
+    Progetto   ||--|{ Task         : "contiene"
+    Dipendente ||--o{ Task         : "responsabile_di"
+
+    Dipendente {
+        INTEGER id        PK
+        TEXT    nome
+        TEXT    cognome
+        TEXT    ruolo
+        REAL    stipendio
+    }
+    Progetto {
+        INTEGER id                  PK
+        TEXT    nome
+        TEXT    data_inizio
+        TEXT    data_fine_prevista
+        REAL    budget
+    }
+    Assegnazione {
+        INTEGER dipendente_id      PK,FK
+        INTEGER progetto_id        PK,FK
+        INTEGER ore_settimanali
+        TEXT    ruolo_nel_progetto
+    }
+    Task {
+        INTEGER id              PK
+        INTEGER progetto_id     FK
+        TEXT    titolo
+        TEXT    stato
+        TEXT    priorita
+        INTEGER responsabile_id FK
+    }

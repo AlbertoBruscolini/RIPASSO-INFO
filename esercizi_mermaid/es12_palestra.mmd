@@ -1,0 +1,47 @@
+%% ============================================================
+%% ESERCIZIO 12 — Gestione Palestra
+%% ============================================================
+%% TESTO:
+%% Gestione iscritti, corsi e istruttori di una palestra.
+%% - Iscritto: id, nome, cognome, data_iscrizione,
+%%   tipo_abbonamento (Mensile/Annuale)
+%% - Istruttore: id, nome, cognome, specializzazione
+%% - Corso: id, nome (es. Yoga, Crossfit), giorno, ora_inizio,
+%%   durata_min, istruttore_id (FK)
+%% - Partecipazione (raccordo N:N): iscritto_id, corso_id,
+%%   data_partecipazione
+%%
+%% Un iscritto partecipa a molti corsi; un corso ha molti iscritti.
+%% ============================================================
+
+erDiagram
+    Iscritto      ||--o{ Partecipazione : "frequenta"
+    Corso         ||--o{ Partecipazione : "partecipato_a"
+    Istruttore    ||--o{ Corso          : "tiene"
+
+    Iscritto {
+        INTEGER id                PK
+        TEXT    nome
+        TEXT    cognome
+        TEXT    data_iscrizione
+        TEXT    tipo_abbonamento
+    }
+    Istruttore {
+        INTEGER id              PK
+        TEXT    nome
+        TEXT    cognome
+        TEXT    specializzazione
+    }
+    Corso {
+        INTEGER id              PK
+        TEXT    nome
+        TEXT    giorno
+        TEXT    ora_inizio
+        INTEGER durata_min
+        INTEGER istruttore_id   FK
+    }
+    Partecipazione {
+        INTEGER iscritto_id          PK,FK
+        INTEGER corso_id             PK,FK
+        TEXT    data_partecipazione  PK
+    }

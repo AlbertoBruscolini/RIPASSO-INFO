@@ -1,0 +1,28 @@
+%% ============================================================
+%% ESERCIZIO 07 — Gestione Ristorante (exam/5m_v7)
+%% ============================================================
+%% TESTO:
+%% Sistema di gestione menu' di un ristorante.
+%% - Categorie: id, nome (es. Antipasti, Primi, Secondi, Dessert)
+%% - Piatti: id, nome, descrizione, prezzo,
+%%           disponibile (boolean), categoria_id (FK)
+%%
+%% Una categoria contiene molti piatti.
+%% Fonte: exam/5m_v7/ristorante/app/schema.sql
+%% ============================================================
+
+erDiagram
+    Categorie ||--o{ Piatti : "contiene"
+
+    Categorie {
+        INTEGER id   PK
+        TEXT    nome
+    }
+    Piatti {
+        INTEGER id            PK
+        TEXT    nome
+        TEXT    descrizione
+        REAL    prezzo
+        BOOLEAN disponibile
+        INTEGER categoria_id  FK
+    }

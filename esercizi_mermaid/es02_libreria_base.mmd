@@ -1,0 +1,39 @@
+%% ============================================================
+%% ESERCIZIO 02 — Database Libreria (BASE)
+%% ============================================================
+%% TESTO:
+%% Modella un sistema di libreria con autori, libri e prestiti.
+%% - Autori: id, nome, cognome
+%% - Libri: id, titolo, autore_id (FK), anno, genere
+%% - Prestiti: id, libro_id (FK), utente, data_prestito,
+%%   data_restituzione (può essere NULL se non ancora restituito)
+%%
+%% RELAZIONI:
+%%   - Un autore scrive molti libri (1:N)
+%%   - Un libro può essere prestato molte volte (1:N)
+%% Fonte: db/libreria_er.mmd + db/libreria.sql
+%% ============================================================
+
+erDiagram
+    Autori   ||--o{ Libri    : "scrive"
+    Libri    ||--o{ Prestiti : "prestato"
+
+    Autori {
+        INTEGER id      PK
+        TEXT    nome
+        TEXT    cognome
+    }
+    Libri {
+        INTEGER id        PK
+        TEXT    titolo
+        INTEGER autore_id FK
+        INTEGER anno
+        TEXT    genere
+    }
+    Prestiti {
+        INTEGER id                PK
+        INTEGER libro_id          FK
+        TEXT    utente
+        TEXT    data_prestito
+        TEXT    data_restituzione
+    }

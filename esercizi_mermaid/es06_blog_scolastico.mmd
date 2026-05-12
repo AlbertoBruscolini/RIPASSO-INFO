@@ -1,0 +1,49 @@
+%% ============================================================
+%% ESERCIZIO 06 — Blog Scolastico (exam/5m_v4 e v5)
+%% ============================================================
+%% TESTO:
+%% Modella un blog gestito da studenti.
+%% - Users: id, username, password, email
+%% - Posts: id, title, body, created (timestamp), author_id (FK)
+%% - Comments: id, body, post_id (FK), author_id (FK)
+%% - Bookmarks (segnalibri, dalla v5): user_id (FK), post_id (FK)
+%%   chiave composta
+%%
+%% RELAZIONI:
+%%   - Un utente scrive molti post (1:N)
+%%   - Un post ha molti commenti (1:N)
+%%   - Un utente scrive molti commenti (1:N)
+%%   - Un utente puo' salvare molti post come segnalibro (N:N)
+%% Fonte: exam/5m_v4_sol/blog_scolastico/app/schema.sql
+%% ============================================================
+
+erDiagram
+    Users    ||--o{ Posts     : "scrive"
+    Users    ||--o{ Comments  : "commenta"
+    Posts    ||--o{ Comments  : "riceve"
+    Users    ||--o{ Bookmarks : "salva"
+    Posts    ||--o{ Bookmarks : "segnato_da"
+
+    Users {
+        INTEGER id        PK
+        TEXT    username
+        TEXT    password
+        TEXT    email
+    }
+    Posts {
+        INTEGER id         PK
+        TEXT    title
+        TEXT    body
+        TEXT    created
+        INTEGER author_id  FK
+    }
+    Comments {
+        INTEGER id         PK
+        TEXT    body
+        INTEGER post_id    FK
+        INTEGER author_id  FK
+    }
+    Bookmarks {
+        INTEGER user_id PK,FK
+        INTEGER post_id PK,FK
+    }

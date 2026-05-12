@@ -1,0 +1,57 @@
+%% ============================================================
+%% ESERCIZIO 14 — Clinica Medica
+%% ============================================================
+%% TESTO:
+%% Sistema gestionale di una clinica.
+%% - Paziente: codice_fiscale (PK testuale), nome, cognome,
+%%   data_nascita, telefono
+%% - Medico: id, nome, cognome, specializzazione
+%% - Visita: id, paziente_cf (FK), medico_id (FK), data_visita,
+%%   diagnosi, costo
+%% - Farmaco: codice (PK), nome, principio_attivo, prezzo
+%% - Prescrizione (N:N tra Visita e Farmaco):
+%%   visita_id (FK), farmaco_codice (FK), dosaggio, durata_giorni
+%%
+%% Nota: la chiave primaria di Paziente e' un TEXT
+%% (codice fiscale), non un INTEGER.
+%% ============================================================
+
+erDiagram
+    Paziente ||--o{ Visita       : "fa"
+    Medico   ||--o{ Visita       : "effettua"
+    Visita   ||--|{ Prescrizione : "include"
+    Farmaco  ||--o{ Prescrizione : "prescritto_in"
+
+    Paziente {
+        TEXT  codice_fiscale  PK
+        TEXT  nome
+        TEXT  cognome
+        TEXT  data_nascita
+        TEXT  telefono
+    }
+    Medico {
+        INTEGER id               PK
+        TEXT    nome
+        TEXT    cognome
+        TEXT    specializzazione
+    }
+    Visita {
+        INTEGER id            PK
+        TEXT    paziente_cf   FK
+        INTEGER medico_id     FK
+        TEXT    data_visita
+        TEXT    diagnosi
+        REAL    costo
+    }
+    Farmaco {
+        TEXT  codice           PK
+        TEXT  nome
+        TEXT  principio_attivo
+        REAL  prezzo
+    }
+    Prescrizione {
+        INTEGER visita_id       PK,FK
+        TEXT    farmaco_codice  PK,FK
+        TEXT    dosaggio
+        INTEGER durata_giorni
+    }

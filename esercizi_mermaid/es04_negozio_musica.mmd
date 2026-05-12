@@ -1,0 +1,57 @@
+%% ============================================================
+%% ESERCIZIO 04 — Catena di Negozi di Musica
+%% ============================================================
+%% TESTO:
+%% Una catena di negozi vende album virtuali. Modella:
+%% - Negozi (codice, indirizzo, citta)
+%% - Dipendenti (id, nome, cognome, FK negozio_id)
+%% - Artisti (id, nome, cognome)
+%% - AlbumVirtuale (codice, titolo, prezzo, FK artista_id)
+%% - Scontrino (id, data, FK negozio_id, importo_totale)
+%% - RigheScontrino (id, FK scontrino_id, FK album_id, quantita)
+%%
+%% Uno scontrino contiene piu' righe; ogni riga riguarda un album.
+%% Fonte: database-design-exercises/es08_sol.mmd
+%% ============================================================
+
+erDiagram
+    Negozi         ||--o{ Dipendenti     : "lavora"
+    Negozi         ||--o{ Scontrino      : "effettua"
+    Artisti        ||--o{ AlbumVirtuale  : "produce"
+    Scontrino      ||--o{ RigheScontrino : "dettaglia"
+    RigheScontrino }o--|| AlbumVirtuale  : "riguarda"
+
+    Negozi {
+        INTEGER codice    PK
+        TEXT    indirizzo
+        TEXT    citta
+    }
+    Dipendenti {
+        INTEGER id          PK
+        TEXT    nome
+        TEXT    cognome
+        INTEGER negozio_id  FK
+    }
+    Artisti {
+        INTEGER id      PK
+        TEXT    nome
+        TEXT    cognome
+    }
+    AlbumVirtuale {
+        INTEGER codice     PK
+        TEXT    titolo
+        REAL    prezzo
+        INTEGER artista_id FK
+    }
+    Scontrino {
+        INTEGER id              PK
+        TEXT    data
+        INTEGER negozio_id      FK
+        REAL    importo_totale
+    }
+    RigheScontrino {
+        INTEGER id            PK
+        INTEGER scontrino_id  FK
+        INTEGER album_id      FK
+        INTEGER quantita
+    }

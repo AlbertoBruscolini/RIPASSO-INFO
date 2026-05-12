@@ -1,0 +1,39 @@
+%% ============================================================
+%% ESERCIZIO 09 — Piattaforma Video (flask-exercises/video-app)
+%% ============================================================
+%% TESTO:
+%% Modella una piattaforma video tipo YouTube.
+%% - Channels (canali): id, name, description, subscribers
+%% - Categories (categorie): id, name
+%% - Videos (video): id, title, description, duration_seconds,
+%%   views, channel_id (FK), category_id (FK)
+%%
+%% RELAZIONI:
+%%   - Un canale pubblica molti video (1:N)
+%%   - Una categoria classifica molti video (1:N)
+%% Fonte: flask-exercises/video-app/app/schema.sql
+%% ============================================================
+
+erDiagram
+    Channels    ||--o{ Videos : "pubblica"
+    Categories  ||--o{ Videos : "classifica"
+
+    Channels {
+        INTEGER id          PK
+        TEXT    name
+        TEXT    description
+        INTEGER subscribers
+    }
+    Categories {
+        INTEGER id    PK
+        TEXT    name
+    }
+    Videos {
+        INTEGER id               PK
+        TEXT    title
+        TEXT    description
+        INTEGER duration_seconds
+        INTEGER views
+        INTEGER channel_id       FK
+        INTEGER category_id      FK
+    }

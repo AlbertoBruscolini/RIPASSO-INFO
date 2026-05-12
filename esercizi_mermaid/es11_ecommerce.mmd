@@ -1,0 +1,44 @@
+%% ============================================================
+%% ESERCIZIO 11 — E-Commerce (AVANZATO)
+%% ============================================================
+%% TESTO:
+%% Sistema di e-commerce completo.
+%% - Cliente: id, nome, email (UNIQUE), citta
+%% - Prodotto: id, nome, prezzo, stock (giacenza), categoria
+%% - Ordine: id, cliente_id (FK), data_ordine, stato
+%%   (es. "in attesa", "spedito", "consegnato")
+%% - RigaOrdine (raccordo N:N): ordine_id (FK), prodotto_id (FK),
+%%   quantita, prezzo_unitario al momento dell'acquisto
+%%   chiave primaria composta (ordine_id, prodotto_id)
+%% ============================================================
+
+erDiagram
+    Cliente   ||--o{ Ordine     : "effettua"
+    Ordine    ||--|{ RigaOrdine : "contiene"
+    Prodotto  ||--o{ RigaOrdine : "incluso_in"
+
+    Cliente {
+        INTEGER id    PK
+        TEXT    nome
+        TEXT    email UK
+        TEXT    citta
+    }
+    Prodotto {
+        INTEGER id        PK
+        TEXT    nome
+        REAL    prezzo
+        INTEGER stock
+        TEXT    categoria
+    }
+    Ordine {
+        INTEGER id          PK
+        INTEGER cliente_id  FK
+        TEXT    data_ordine
+        TEXT    stato
+    }
+    RigaOrdine {
+        INTEGER ordine_id        PK,FK
+        INTEGER prodotto_id      PK,FK
+        INTEGER quantita
+        REAL    prezzo_unitario
+    }

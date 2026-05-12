@@ -1,0 +1,48 @@
+%% ============================================================
+%% ESERCIZIO 13 — Mini Social Network (AVANZATO)
+%% ============================================================
+%% TESTO:
+%% Modella un mini social network con post e relazione di
+%% "amicizia" auto-referenziale.
+%% - Utente: id, username (UNIQUE), email (UNIQUE),
+%%   data_registrazione
+%% - Post: id, utente_id (FK), testo, data_pubblicazione, likes
+%% - Amicizia: utente_id_1 (FK Utente), utente_id_2 (FK Utente),
+%%   data_amicizia
+%%   Entrambi puntano alla stessa tabella Utente!
+%% - Like: utente_id (FK), post_id (FK), data_like
+%%
+%% Concetto avanzato: SELF-JOIN tramite tabella di raccordo
+%% sulla stessa entita'.
+%% ============================================================
+
+erDiagram
+    Utente  ||--o{ Post     : "pubblica"
+    Utente  ||--o{ Amicizia : "amico_di_1"
+    Utente  ||--o{ Amicizia : "amico_di_2"
+    Utente  ||--o{ Like     : "mette"
+    Post    ||--o{ Like     : "riceve"
+
+    Utente {
+        INTEGER id                  PK
+        TEXT    username            UK
+        TEXT    email               UK
+        TEXT    data_registrazione
+    }
+    Post {
+        INTEGER id                 PK
+        INTEGER utente_id          FK
+        TEXT    testo
+        TEXT    data_pubblicazione
+        INTEGER likes
+    }
+    Amicizia {
+        INTEGER utente_id_1   PK,FK
+        INTEGER utente_id_2   PK,FK
+        TEXT    data_amicizia
+    }
+    Like {
+        INTEGER utente_id  PK,FK
+        INTEGER post_id    PK,FK
+        TEXT    data_like
+    }

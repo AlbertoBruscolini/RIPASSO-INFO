@@ -1,0 +1,46 @@
+%% ============================================================
+%% ESERCIZIO 01 — Database Scuola (BASE)
+%% ============================================================
+%% TESTO:
+%% Modella un database "scuola" che gestisce studenti ed esami.
+%% Ogni studente ha matricola (PK), nome e cognome.
+%% Ogni esame ha id (PK auto-increment), una matricola (FK), il
+%% nome del corso e il voto.
+%% Uno studente può sostenere molti esami; ogni esame appartiene
+%% a un solo studente.
+%%
+%% CARDINALITA': Studenti 1 ----- N Esami (uno-a-molti)
+%% Fonte: db/scuola_er.mmd  +  db/scuola.sql
+%% ============================================================
+
+erDiagram
+    Studenti ||--o{ Esami : "sostiene"
+
+    Studenti {
+        INTEGER Matricola PK
+        TEXT    Nome
+        TEXT    Cognome
+    }
+    Esami {
+        INTEGER Id        PK
+        INTEGER Matricola FK
+        TEXT    Corso
+        INTEGER Voto
+    }
+
+%% ============================================================
+%% TRADUZIONE SQL ATTESA:
+%%
+%% CREATE TABLE Studenti (
+%%     Matricola INTEGER PRIMARY KEY,
+%%     Nome      TEXT NOT NULL,
+%%     Cognome   TEXT NOT NULL
+%% );
+%% CREATE TABLE Esami (
+%%     Id        INTEGER PRIMARY KEY AUTOINCREMENT,
+%%     Matricola INTEGER NOT NULL,
+%%     Corso     TEXT    NOT NULL,
+%%     Voto      INTEGER NOT NULL,
+%%     FOREIGN KEY (Matricola) REFERENCES Studenti(Matricola)
+%% );
+%% ============================================================

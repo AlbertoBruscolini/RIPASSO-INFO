@@ -1,0 +1,33 @@
+%% ============================================================
+%% ESERCIZIO 08 — Giochi da Tavolo (flask-exercises/board-games)
+%% ============================================================
+%% TESTO:
+%% Database per tracciare giochi da tavolo e partite.
+%% - Games (giochi): id, name, min_players, max_players,
+%%   duration_minutes, category
+%% - Matches (partite): id, game_id (FK), match_date,
+%%   winner_name, players_count, notes
+%%
+%% Un gioco puo' essere giocato in molte partite (1:N).
+%% Fonte: flask-exercises/board-games-app/app/schema.sql
+%% ============================================================
+
+erDiagram
+    Games ||--o{ Matches : "giocato_in"
+
+    Games {
+        INTEGER id                PK
+        TEXT    name
+        INTEGER min_players
+        INTEGER max_players
+        INTEGER duration_minutes
+        TEXT    category
+    }
+    Matches {
+        INTEGER id              PK
+        INTEGER game_id         FK
+        TEXT    match_date
+        TEXT    winner_name
+        INTEGER players_count
+        TEXT    notes
+    }
